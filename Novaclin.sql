@@ -76,13 +76,19 @@ CONSTRAINT Fk_exameconsulta FOREIGN KEY(idConsulta)
 REFERENCES consulta(idConsulta)
 );
 
+/*Guia de códigos*/
+
 ALTER TABLE paciente
 ADD estado CHAR (2) NOT NULL;
 
 DELETE FROM ...
 WHERE ... = .
 
-SELECT * FROM paciente
+SELECT * FROM Consulta
+
+SHOW tables
+
+/*Inserindo massa de dados as tabelas*/
 
 INSERT INTO paciente
 VALUES 
@@ -102,17 +108,34 @@ VALUES
 ('Cebolinha','cebolinha.senaclin','236598','13998662356','13564897125');
 
 INSERT INTO especialidade (nomeEspecialidade)
-VALUES (
+VALUES 
 ('Cardiologista'),
 ('Otorrinolaringologista'),
 ('Clínico Geral'),
 ('Gastroenterologista'),
 ('Otorpedista');
 
-INSERT INTO medicos
+INSERT INTO medico
 VALUES 
 (1,1,'Pardal','765544SP','pardal_med.senaclin','231564'),
 (2,5,'Mônica','768880SP','monica_med.senaclin','987564'),
 (3,3,'Zé Carioca','165544RJ','zeca_med.senaclin','132168'),
 (4,4,'Magali','265544SP',',magali_med.senaclin','323646'),
 (5,2,'Horácio','365544MG','horacio_med.senaclin','454687');
+
+
+/*Inserindo consultas*/
+
+INSERT INTO consulta (idPaciente,idMedico,idRecepcionista, dataHoraConsulta, sintomas, prescricao)
+VALUES 
+(1, 1, 1, '2024-07-22 14:30','Fortes dores de cabeça, nausea e enjoô', '5ml de amoxilina de 8 em 8h e 1 comprimindo Dipirona 100mlg de 4 em 4h'),
+(2,2,1, '2024-06-23 13:00','Consulta de rotina',NULL),
+(3,4,2, '2024-06-29 16:00', 'Consulta de rotina',NULL),
+(7,5,2, '2024-07-02 11:00', 'Dores abdominais e dores de cabeça','Dipirona de 4 em 4h'),
+(8,5,2, '2024-07-05 13:30', 'Consulta de rotina', NULL),
+(3,1,1, '2024-07-05 15:00', 'Retorno', 'Exame RaioX do Peitoral'),
+(3,2,1, '2024-07-10 14:00', 'Retorno', 'Exame RaioX do Crânio');
+
+INSERT INTO exame
+VALUES 
+(22,6, '2024-08-10 13:00', 'RaioX', 'Em espera',);
