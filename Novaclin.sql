@@ -79,14 +79,40 @@ REFERENCES consulta(idConsulta)
 ALTER TABLE paciente
 ADD estado CHAR (2) NOT NULL;
 
+DELETE FROM ...
+WHERE ... = .
+
+SELECT * FROM paciente
+
 INSERT INTO paciente
+VALUES 
+(1,'Donald','12342312521','13991182342','2003-06-21 02:48:11','donaldvivido@gmail.com','Rua Tolentino Viera','546','Casa','Santos','11236489',null,'SP'),
+(2,'Margarida','3549871322','13997586238','2004-04-11 03:57:23','margaridaraquel@gmail.com','Rua Joselina Almeida','321','Apto','São Vicente','11956132',null,'SP'),
+(3,'Patinhas','7654652310','13996546885','2000-08-29 09:02:32','patinhasmolenga@gmail.com','Avenida Carijós','1514','Casa','Santos','11989762',null,'SP'),
+(4,'Huguinho','3274516451','15987231450','2001-05-31 13:15:22','hugoministro@gmail.com','Rua Leonardo Nunes','212','Casa','Cubatão','11354124',null,'SP'),
+(5,'Luizinho','2316754860','21921356895','1987-11-01 19:02:55','luizfarias@gmail.com','Avenida Guarani','111','Casa','Praia Grande','11856478',null,'SP'),
+(6,'Zezinho','85245697312','39850222365','1969-12-22 17:00:00','zezinhotonho@gmail.com','Rua Maracanã','244','apto','São João del Rei','11365484',null,'MG'),
+(7,'Mickey','32165487987','11988235486','2000-03-08 11:35:24','mickeymouse@gmail.com','Avenida Joselina Ferreira','12','Casa','Rio de Janeiro','11587698',null,'RJ'),
+(8,'Minie','25489614235','12977856234','2005-04-13 12:25:52','miniemouse@gmail.com','Avenida Tupi','22','Apto','São Paulo','11235687',null,'SP');
+
+INSERT INTO recepcionista (nomeRecepcionista,loginRecepcionsita,senha,celular,cpf)
+VALUES 
+('Chico Bento','chicobento.senaclin','546895','13991874321','56732568911'),
+('Franjinha','franjinha.senaclin','753961','13997215478','56987456231'),
+('Cebolinha','cebolinha.senaclin','236598','13998662356','13564897125');
+
+INSERT INTO especialidade (nomeEspecialidade)
 VALUES (
-1,'Donald','12342312521','13991182342','2003-06-21 02:48:11','donaldvivido@gmail.com','Rua Tolentino Viera','546','Casa','Santos','11236489',null,'SP'
-2,'Margarida','3549871322','13997586238','2004-04-11 03:57:23','margaridaraquel@gmail.com','Rua Joselina Almeida','321','Apto','São Vicente','11956132',null,'SP'
-3,'Patinhas','7654652310','13996546885','2000-08-29 09:02:32','patinhasmolenga@gmail.com','Avenida Carijós','1514','Casa','Santos','11989762',null,'SP'
-4,'Huguinho','3274516451','15987231450','2001-05-31 13:15:22','hugoministro@gmail.com','Rua Leonardo Nunes','212','Casa','Cubatão','11354124',null,'SP'
-5,'Luizinho','2316754860','21921356895','1987-11-01 19:02:55','luizfarias@gmail.com','Avenida Guarani','111','Casa','Praia Grande','11856478',null,'SP'
-6,'Zezinho','85245697312','39850222365','1969-12-22 17:00:00','zezinhotonho@gmail.com','Rua Maracanã','244','apto','São João del Rei','11365484',null,'MG'
-7,'Mickey','32165487987','11988235486','2000-03-08 11:35:24','mickeymouse@gmail.com','Avenida Joselina Ferreira','12','Casa','Rio de Janeiro','11587698',null,'RJ'
-8,'Minie','25489614235','12977856234','2005-04-13 12:25:52','miniemouse@gmail.com','Avenida Tupi','22','','','','',null,'SP'
-)
+('Cardiologista'),
+('Otorrinolaringologista'),
+('Clínico Geral'),
+('Gastroenterologista'),
+('Otorpedista');
+
+INSERT INTO medicos
+VALUES 
+(1,1,'Pardal','765544SP','pardal_med.senaclin','231564'),
+(2,5,'Mônica','768880SP','monica_med.senaclin','987564'),
+(3,3,'Zé Carioca','165544RJ','zeca_med.senaclin','132168'),
+(4,4,'Magali','265544SP',',magali_med.senaclin','323646'),
+(5,2,'Horácio','365544MG','horacio_med.senaclin','454687');
