@@ -124,18 +124,103 @@ VALUES
 (5,2,'Horácio','365544MG','horacio_med.senaclin','454687');
 
 
-/*Inserindo consultas*/
-
-INSERT INTO consulta (idPaciente,idMedico,idRecepcionista, dataHoraConsulta, sintomas, prescricao)
+/*questão 5- Inserir de forma explícita uma consulta para cada médico
+Dados conforme abaixo, demais dados livres. Atenção para colocar
+datas de consultas posteriores a data de hoje.*/
+INSERT INTO consulta (idPaciente, idRecepcionista, idMedico, dataHoraConsulta, sintomas, prescricao)
 VALUES 
-(1, 1, 1, '2024-07-22 14:30','Fortes dores de cabeça, nausea e enjoô', '5ml de amoxilina de 8 em 8h e 1 comprimindo Dipirona 100mlg de 4 em 4h'),
-(2,2,1, '2024-06-23 13:00','Consulta de rotina',NULL),
-(3,4,2, '2024-06-29 16:00', 'Consulta de rotina',NULL),
-(7,5,2, '2024-07-02 11:00', 'Dores abdominais e dores de cabeça','Dipirona de 4 em 4h'),
-(8,5,2, '2024-07-05 13:30', 'Consulta de rotina', NULL),
-(3,1,1, '2024-07-05 15:00', 'Retorno', 'Exame RaioX do Peitoral'),
-(3,2,1, '2024-07-10 14:00', 'Retorno', 'Exame RaioX do Crânio');
+(1, 1, 1, '2024-06-25 10:00:00', 'Febre', 'Repouso'),
+(2, 1, 2, '2024-06-26 11:00:00', 'Dor no joelho', 'Anti-inflamatório'),
+(3, 1, 3, '2024-06-27 12:00:00', 'Dor abdominal', 'Exames'),
+(7, 2, 4, '2024-06-28 13:00:00', 'Dor de estômago', 'Dieta'),
+(8, 2, 5, '2024-06-29 14:00:00', 'Dor de ouvido', 'Medicação');
 
-INSERT INTO exame
+/*Inserir mais duas consultas ao Patinhas*/
+INSERT INTO consulta (idPaciente, idRecepcionista, idMedico, dataHoraConsulta, sintomas, prescricao)
 VALUES 
-(22,6, '2024-08-10 13:00', 'RaioX', 'Em espera',);
+(3, 1, 1, '2024-06-30 15:00:00', 'Dor no peito', 'Eletrocardiograma'),
+(3, 1, 2, '2024-07-01 16:00:00', 'Dor nas costas', 'Raio-X coluna');
+
+/*Inserir um exame para cada consulta do Patinhas criada no item anterior */
+INSERT INTO exame (idConsulta, dataHoraExame, nomeExame, statusExame)
+VALUES 
+(3, '2024-06-30 15:30:00', 'Eletrocardiograma', 'Pendente'),
+(5, '2024-07-01 16:30:00', 'Raio-X Coluna', 'Pendente');
+
+/*Remarcar (Atualizar) a consulta do Donald para a mesma data porém, 2hs mais tarde.*/
+UPDATE consulta
+SET dataHoraConsulta = DATE_ADD(dataHoraConsulta, INTERVAL 2 HOUR)
+WHERE idConsulta = 1;
+
+/*-A Minie mudou de endereço mas não mudou de cidade (logradouro, numero e
+complemento). Realize a alteração dos dados.*/
+UPDATE paciente
+SET logradouro = 'nova rua', numero = '456', complemento = 'ap10'
+WHERE nome = 'Minie';
+
+/*O Mickey mudou o celular, realize a alteração.*/
+UPDATE paciente
+SET cel = '999888777'
+WHERE nome = 'Mickey';
+
+/*O Patinhas não poderá comparecer na consulta com o Ze Carioca. Realize a exclusão da
+mesma no sistema. Foi possível? Justifique.*/
+DELETE FROM consulta
+WHERE idPaciente = 3 AND idMedico = 3;
+/*motivo do erro*/
+/*Esta operação pode falhar devido a uma restrição de chave estrangeira. A consulta do Patinhas com Zé Carioca pode estar referenciada em outras tabelas (por exemplo, na tabela exame através da chave estrangeira idConsulta). Antes de excluir, seria necessário remover as dependências nesses registros relacionados*/
+
+/*Realize a exclusão da Dr Mônica da tabela Medico. Foi possível? Justifique.*/
+DELETE FROM medico
+WHERE nome = 'Mônica';
+/*Não é possível excluir a médica Mônica diretamente devido a restrições de chave estrangeira. Ela pode estar associada a consultas na tabela consulta ou a exames na tabela exame. Para excluir, primeiro seria necessário remover todas as dependências relacionadas a ela nessas tabelas.*/
+
+/*Exibir a data de todas as consultas em ordem cronológica, da que está mais próxima para a
+que está mais longe.*/
+SELECT dataHoraConsulta
+FROM consulta
+ORDER BY dataHoraConsulta;
+
+/*Exibir todos os dados da tabela médico.*/
+SELECT * FROM medico;
+
+/*Exibir apenas as cidades em que a clínica possui pacientes, em ordem alfabética.*/
+SELECT DISTINCT cidade
+FROM paciente
+ORDER BY cidade;
+
+/*Exibir nome, celular e e-mail de todos os pacientes da clínica, em ordem alfabética.*/
+SELECT nome, cel, email
+FROM paciente
+ORDER BY nome;
+
+/*Atualizar apenas o CRM do Dr.Pardal que foi cadastrado errado no sistema.*/
+UPDATE medico
+SET crm = '765544SP'
+WHERE nome = 'Pardal';
+
+/*Resetar a senha de todos os médicos do sistema para o padrão "DOCTOR".*/
+UPDATE medico
+SET senha = 'DOCTOR';
+
+/*Exibir apenas o nome do médico e seu CRM, dos médicos registrados em SP, tudo isto em
+ordem alfabética.*/
+SELECT nome, crm
+FROM medico
+WHERE crm LIKE '%SP%'
+ORDER BY nome;
+
+/*Exibir nome e celular de todos os pacientes que vivem em Santos e possuem nome
+iniciando com a letra P.*/
+SELECT nome, cel
+FROM paciente
+WHERE cidade = 'Santos' AND nome LIKE 'P%'
+ORDER BY nome;
+
+
+/*Exibir o nome, logradouro, numero e cidade de todos os pacientes que moram em
+casa, em ordem alfabética.*/
+SELECT nome, logradouro, numero, cidade
+FROM paciente
+WHERE logradouro LIKE '%casa%'
+ORDER BY nome;
