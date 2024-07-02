@@ -383,4 +383,180 @@ GROUP BY e.nomeEspecialidade;
  
 SELECT * FROM vw_qtde_consultas_por_especialidade;
 
+/*3º Questão*/
 
+CREATE PROCEDURE sp_quantidade_medicos_por_especialidade(IN nomeEspecialidade VARCHAR(30))
+SELECT COUNT(*) AS quantidade_medicos
+FROM medico m
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+WHERE e.nomeEspecialidade = nomeEspecialidade;
+ 
+SELECT * FROM especialidade
+
+CALL sp_quantidade_medicos_por_especialidade('Otorrinolaringologista');
+
+DROP PROCEDURE sp_quantidade_medicos_por_especialidade
+
+/*4º Questão*/
+
+CREATE PROCEDURE sp_resetar_senhas_medicos()
+UPDATE medico
+SET senha = 'DOCTOR';
+ 
+CALL sp_resetar_senhas_medicos();
+ 
+SELECT * FROM medico
+
+/*5º Questão*/
+
+CREATE PROCEDURE puAlterarInfoPaciente(
+    IN p_nome VARCHAR(50),
+    IN p_logradouro VARCHAR(30),
+    IN p_numero VARCHAR(6),
+    IN p_complemento VARCHAR(10),
+    IN p_cidade VARCHAR(20),
+    IN p_cpf CHAR(11)
+)
+ 
+    UPDATE paciente
+    SET logradouro = p_logradouro,
+        numero = p_numero,
+        complemento = p_complemento,
+        cidade = p_cidade
+    WHERE cpf = p_cpf AND nome = p_nome;
+ 
+CALL puAlterarInfoPaciente('Minie', 'nova rua', '456', 'ap10', 'São Paulo', '00998877665');
+ 
+SELECT * FROM paciente /*Minie foi alterada*/
+ 
+/** em caso de erro /
+/* Atualizar Donald */
+UPDATE paciente
+SET nome = 'Donald',
+    cpf = '12345678901',
+    cel = '98872773211',
+    email = 'donaldduck@gmail.com',
+    logradouro = 'rua luiz cunha',
+    numero = '123',
+    complemento = 'ap2',
+    cidade = 'Santos',
+    cep = '87654321',
+    estado = 'SP'
+WHERE idPaciente = 1;
+ 
+/* Atualizar Margarida */
+UPDATE paciente
+SET nome = 'Margarida',
+    cpf = '09876543212',
+    cel = '988728808',
+    email = 'margarida@gmail.com',
+    logradouro = 'rua morgan cunha',
+    numero = '321',
+    complemento = 'ap3',
+    cidade = 'São Vicente',
+    cep = '12345678',
+    estado = 'SP'
+WHERE idPaciente = 2;
+ 
+/* Atualizar Patinhas */
+UPDATE paciente
+SET nome = 'Patinhas',
+    cpf = '54637281901',
+    cel = '988704605',
+    email = 'patinhas@gmail.com',
+    logradouro = 'rua pedro cunha',
+    numero = '222',
+    complemento = 'ap4',
+    cidade = 'Santos',
+    cep = '22187635',
+    estado = 'SP'
+WHERE idPaciente = 3;
+ 
+/* Atualizar Huguinho */
+UPDATE paciente
+SET nome = 'Huguinho',
+    cpf = '98735102811',
+    cel = '83209864571',
+    email = 'huguinho@gmail,com',
+    logradouro = 'rua don pedro',
+    numero = '111',
+    complemento = 'ap5',
+    cidade = 'Cubatão',
+    cep = '09872144',
+    estado = 'SP'
+WHERE idPaciente = 4;
+ 
+/* Atualizar Luizinho */
+UPDATE paciente
+SET nome = 'Luizinho',
+    cpf = '03761528391',
+    cel = '92823716273',
+    email = 'luizinho@gmail,com',
+    logradouro = 'rua macaco prego',
+    numero = '333',
+    complemento = 'ap6',
+    cidade = 'Praia Grande',
+    cep = '99999999',
+    estado = 'SP'
+WHERE idPaciente = 5;
+ 
+/* Atualizar Zezinho */
+UPDATE paciente
+SET nome = 'Zezinho',
+    cpf = '93726615229',
+    cel = '8372716382',
+    email = 'zezinho@gmail.com',
+    logradouro = 'rua bras cubas',
+    numero = '342',
+    complemento = 'ap7',
+    cidade = 'São João del Rei',
+    cep = '09182771',
+    estado = 'MG'
+WHERE idPaciente = 6;
+ 
+/* Atualizar Mickey */
+UPDATE paciente
+SET nome = 'Mickey',
+    cpf = '12334455667',
+    cel = '827193936541',
+    email = 'mickey@gmail.com',
+    logradouro = 'rua jeffrey',
+    numero = '444',
+    complemento = 'ap8',
+    cidade = 'Rio de Janeiro',
+    cep = '32919999',
+    estado = 'RJ'
+WHERE idPaciente = 7;
+ 
+/* Atualizar Minie */
+UPDATE paciente
+SET nome = 'Minie',
+    cpf = '00998877665',
+    cel = '8273621823931',
+    email = 'minie@gmail.com',
+    logradouro = 'casa da minie',
+    numero = '555',
+    complemento = '',
+    cidade = 'São Paulo',
+    cep = '01112333',
+    estado = 'SP'
+WHERE idPaciente = 8;
+
+/*7º Questões*/
+
+CREATE PROCEDURE piInserirConslta(
+IN p_idPaciente INT,
+IN p_idRecepcionista INT,
+IN p_idMedico INT,
+IN p_dataHoraConsulta DATETIME,
+IN p_sintomas VARCHAR(200),
+IN p_prescricao VARCHAR(200)
+)
+INSERT INTO consulta (idPaciente, idRecepcionista, idMedico, dataHoraConsulta, sintomas, prescricao)
+VALUES (p_idPaciente, p_idRecepcionista, p_idMedico, p_dataHoraConsulta, p_sintomas, p_prescricao);
+ 
+CALL piInserirConslta(3, 1, 1, '2024-06-30 15:00:00', 'Dor no peito', 'Eletrocardiograma');
+CALL piInserirConslta(3, 1, 2, '2024-07-01 16:00:00', 'Dor nas costas', 'Raio-X coluna');
+ 
+ 
+SELECT * FROM consulta
