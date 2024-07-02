@@ -542,7 +542,7 @@ SET nome = 'Minie',
     estado = 'SP'
 WHERE idPaciente = 8;
 
-/*7º Questões*/
+/*6º Questões*/
 
 CREATE PROCEDURE piInserirConslta(
 IN p_idPaciente INT,
@@ -558,5 +558,67 @@ VALUES (p_idPaciente, p_idRecepcionista, p_idMedico, p_dataHoraConsulta, p_sinto
 CALL piInserirConslta(3, 1, 1, '2024-06-30 15:00:00', 'Dor no peito', 'Eletrocardiograma');
 CALL piInserirConslta(3, 1, 2, '2024-07-01 16:00:00', 'Dor nas costas', 'Raio-X coluna');
  
+ 
+SELECT * FROM consulta
+
+/*7º Questões*/
+
+CREATE PROCEDURE pd_DelExame(
+IN p_idExame INT
+)
+DELETE FROM exame
+WHERE idExame = p_idExame;
+ 
+CALL pd_DelExame(3); /*ID do exame a ser deletado é 3*/
+SELECT * FROM exame
+ 
+/*8º Questão*/
+ 
+CREATE PROCEDURE ps_AgendaMedico(
+IN p_nomeMedico VARCHAR(50)
+)
+SELECT c.dataHoraConsulta, p.nome AS nome_paciente
+FROM consulta c
+JOIN medico m ON c.idMedico = m.idMedico
+JOIN paciente p ON c.idPaciente = p.idPaciente
+WHERE m.nome = p_nomeMedico
+ORDER BY c.dataHoraConsulta;
+ 
+CALL ps_AgendaMedico ('Zé Carioca');
+
+/*9º Questão*/
+
+CREATE PROCEDURE ps_MedicoEspecialidade()
+SELECT e.nomeEspecialidade AS especialidade, COUNT(*) AS quantidade_medicos
+FROM medico m
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+GROUP BY e.nomeEspecialidade;
+ 
+CALL ps_MedicoEspecialidade ();
+
+/*10º Questão*/
+
+CREATE PROCEDURE ps_pacienteEspecialidadeConsulta(
+IN p_nomePaciente VARCHAR(50)
+)
+SELECT c.dataHoraConsulta, p.cel AS celular_paciente, e.nomeEspecialidade AS especialidade
+FROM consulta c
+JOIN medico m ON c.idMedico = m.idMedico
+JOIN paciente p ON c.idPaciente = p.idPaciente
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+WHERE p.nome = p_nomePaciente
+ORDER BY c.dataHoraConsulta;
+
+/*Desafio de prática*/
+
+CREATE PROCEDURE pu_alterarDataConsulta(
+IN p_idConsulta INT,
+IN p_newDateTime DATETIME
+)
+UPDATE consulta
+SET dataHoraConsulta = p_newDateTime
+WHERE idConsulta = p_idConsulta;
+ 
+CALL pu_alterarDataConsulta (1, '2024-06-25 12:00:00'); -- Atualizando a consulta do Donald para 25 de junho às 12:00
  
 SELECT * FROM consulta
